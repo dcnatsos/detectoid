@@ -3,8 +3,6 @@ __pycache__/
 
 bin/
 eggs/
-docs/html/
-docs/doctrees/
 develop-eggs/
 detectoid.egg-info/
 
@@ -12,6 +10,11 @@ detectoid.egg-info/
 .coverage
 coverage.xml
 nosetests.xml
+
+docs/Makefile
+docs/make.bat
+docs/html/
+docs/doctrees/
 
 dev.ini
 tests.ini
