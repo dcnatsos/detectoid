@@ -24,3 +24,11 @@ class User(DeclarativeBase):
 
     def __eq__(self, other):
         return self.name == other.name
+
+    def __json__(self, request):
+        return {
+            "name": self.name,
+            "created": self.created.isoformat(),
+            "updated": self.updated.isoformat(),
+            "follows": self.follows,
+        }

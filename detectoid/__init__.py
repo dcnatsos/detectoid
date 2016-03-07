@@ -20,6 +20,7 @@ def main(global_config, **settings):
     config.add_static_view('static', 'static', cache_max_age=3600)
 
     config.add_route('home', '/')
+    config.add_route('chatters', '/{channel}')
     config.add_route('distribution', '/{channel}/distribution')
 
     config.scan(ignore='detectoid.tests')
