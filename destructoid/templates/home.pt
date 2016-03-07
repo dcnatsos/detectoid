@@ -1,0 +1,21 @@
+<metal:main use-macro="load: layout.pt" >
+  <div class="col-md-12" metal:fill-slot="content">
+
+    <div class="jumbotron">
+      <h1>Detectoid, the MrDestructoid detector</h1>
+      <p class="lead">
+        Detect viewbots in Twitch streams.
+      </p>
+    </div>
+
+  </div>
+
+  <tal:block metal:fill-slot="head">
+    <link rel="stylesheet" href="${request.static_url('destructoid:static/css/home.css')}" media="all"/>
+  </tal:block>
+
+  <tal:block metal:fill-slot="body-bottom">
+    <script type="text/javascript" src="${request.static_url('destructoid:static/js/home.js')}"></script>
+  </tal:block>
+
+</metal:main>

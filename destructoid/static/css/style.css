@@ -1,0 +1,72 @@
+
+/**
+ * Navigation
+ */
+.navbar-brand small {
+  font-style: italic;
+}
+
+.navbar-nav a {
+  outline: 0 none;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .open > a {
+  background-image: none;
+  box-shadow: 0 0 0 transparent;
+}
+
+/**
+ * Fonts
+ */
+body {
+  font-family: 'Roboto';
+}
+
+/**
+ * Metric
+ */
+ul.metric {
+  padding-left: 15px;
+  list-style-type: square;
+}
+ul.metric ul {
+  padding-left: 25px;
+  list-style-type: square;
+}
+ul.metric big {
+  color: #b42525;
+  font-size: 150%;
+}
+ul.metric ul big {
+  font-size: 130%;
+}
+
+/**
+ * Nav pills
+ */
+.nav-pills {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.nav-pills > li {
+}
+.nav-pills > li > a {
+  color: grey;
+  font-size: 150%;
+  outline: 0 none;
+}
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:focus,
+.nav-pills > li.active > a:hover {
+  color: black;
+  background-color: rgba(0,0,0,0.1);
+}
+
+/**
+ * Inline lists
+ */
+ul.inline li {
+  list-style: none;
+  display: inline-block;
+}

@@ -38,5 +38,4 @@ class HomeTests(IntegrationTestBase):
         """
         /home
         """
-        #res = self.testapp.get('/home', status=200)
-        #self.assertTrue(b'home' in res.body)
+        self.testapp.get('/', status=200)
