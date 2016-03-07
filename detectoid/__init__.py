@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 """
-destructoid
+detectoid
 ------------------------------
-Destructoid, a simple website to guess whether a Twitch stream has viewbots
+Detectoid, a simple website to guess whether a Twitch stream has viewbots
 """
 
 from pyramid.config import Configurator
@@ -18,6 +18,6 @@ def main(global_config, **settings):
 
     config.add_route('home', '/')
 
-    config.scan(ignore='destructoid.tests')
+    config.scan(ignore='detectoid.tests')
 
     return config.make_wsgi_app()

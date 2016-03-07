@@ -2,7 +2,7 @@
   <div class="col-md-12" metal:fill-slot="content">
 
     <div class="jumbotron">
-      <h1>Detectoid, the MrDestructoid detector</h1>
+      <h1>Detectoid, the <em>MrDestructoid</em> detector</h1>
       <p class="lead">
         Detect viewbots in Twitch streams.
       </p>
@@ -11,11 +11,11 @@
   </div>
 
   <tal:block metal:fill-slot="head">
-    <link rel="stylesheet" href="${request.static_url('destructoid:static/css/home.css')}" media="all"/>
+    <link rel="stylesheet" href="${request.static_url('detectoid:static/css/home.css')}" media="all"/>
   </tal:block>
 
   <tal:block metal:fill-slot="body-bottom">
-    <script type="text/javascript" src="${request.static_url('destructoid:static/js/home.js')}"></script>
+    <script type="text/javascript" src="${request.static_url('detectoid:static/js/home.js')}"></script>
   </tal:block>
 
 </metal:main>

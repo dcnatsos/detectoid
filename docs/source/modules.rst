@@ -1,7 +1,7 @@
 Modules
 =======
 
-.. automodule:: destructoid
+.. automodule:: detectoid
    :private-members:
    :members:
    :undoc-members:

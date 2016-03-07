@@ -21,23 +21,23 @@ extras = {
 
 
 setup(
-    name='destructoid',
+    name='detectoid',
     version='0.0.1.dev0',
-    description="Destructoid, a simple website to guess whether a Twitch stream has viewbots",
+    description="Detectoid, a simple website to guess whether a Twitch stream has viewbots",
     author="Benjamin Maisonnas",
     author_email="ben@wainei.net",
-    url="https://github.com/Benzhaomin/destructoid.git",
+    url="https://github.com/Benzhaomin/detectoid.git",
     license = 'GPLv3',
     packages=[
-        'destructoid',
+        'detectoid',
     ],
     include_package_data=True,
     zip_safe = False,
     install_requires=required,
     extras_require=extras,
-    test_suite="destructoid.tests",
+    test_suite="detectoid.tests",
     entry_points="""\
     [paste.app_factory]
-    main = destructoid:main
+    main = detectoid:main
     """,
       )

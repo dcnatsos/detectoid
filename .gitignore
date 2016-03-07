@@ -6,7 +6,7 @@ eggs/
 docs/html/
 docs/doctrees/
 develop-eggs/
-destructoid.egg-info/
+detectoid.egg-info/
 
 .installed.cfg
 .coverage

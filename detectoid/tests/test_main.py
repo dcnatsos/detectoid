@@ -9,7 +9,7 @@ from pyramid import testing
 from paste.deploy.loadwsgi import appconfig
 from webtest import TestApp
 
-from destructoid import main
+from detectoid import main
 
 here = os.path.dirname(__file__)
 settings = appconfig('config:' + os.path.join(here, '../../', 'tests.ini'))

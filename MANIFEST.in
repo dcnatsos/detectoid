@@ -1,5 +1,5 @@
 recursive-include docs *
 recursive-exclude docs/build *
-recursive-include destructoid *.ini *.cfg *.rst *.css *.pt *.js
+recursive-include detectoid *.ini *.cfg *.rst *.css *.pt *.js
 
 global-exclude *.pyo *pyc .installed.cfg *~

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# destructoid documentation build configuration file, created by
+# detectoid documentation build configuration file, created by
 # sphinx-quickstart on Mon Mar  7 11:14:57 2016.
 #
 # This file is execfile()d with the current directory set to its
@@ -50,7 +50,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'destructoid'
+project = 'detectoid'
 copyright = '2016, Benjamin Maisonnas'
 author = 'Benjamin Maisonnas'
 
@@ -122,7 +122,7 @@ html_theme_options = {
     'logo_name': True,
     'description': 'find twich viewbots',
     'github_user': 'BenZhaoMin',
-    'github_repo': 'destructoid',
+    'github_repo': 'detectoid',
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
@@ -210,7 +210,7 @@ html_theme_options = {
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'destructoiddoc'
+htmlhelp_basename = 'detectoiddoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -232,7 +232,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'destructoid.tex', 'destructoid Documentation',
+    (master_doc, 'detectoid.tex', 'detectoid Documentation',
      'Benjamin Maisonnas', 'manual'),
 ]
 
@@ -262,7 +262,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'destructoid', 'destructoid Documentation',
+    (master_doc, 'detectoid', 'detectoid Documentation',
      [author], 1)
 ]
 
@@ -276,8 +276,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'destructoid', 'destructoid Documentation',
-     author, 'destructoid', 'One line description of project.',
+    (master_doc, 'detectoid', 'detectoid Documentation',
+     author, 'detectoid', 'One line description of project.',
      'Miscellaneous'),
 ]
 

@@ -8,4 +8,4 @@ nosetests:
 
 flake8:
 	@echo "==== Running Flake8 ===="
-	@bin/flake8 destructoid/*.py
+	@bin/flake8 detectoid/*.py

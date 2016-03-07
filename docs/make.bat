@@ -5,9 +5,9 @@ REM Command file for Sphinx documentation
 if "%SPHINXBUILD%" == "" (
 	set SPHINXBUILD=sphinx-build
 )
-set BUILDDIR=/home/ben/dev/python/destructoid/git/docs
-set ALLSPHINXOPTS=-d %BUILDDIR%/doctrees %SPHINXOPTS% /home/ben/dev/python/destructoid/git/docs/source
-set I18NSPHINXOPTS=%SPHINXOPTS% /home/ben/dev/python/destructoid/git/docs/source
+set BUILDDIR=/home/ben/dev/python/detectoid/git/docs
+set ALLSPHINXOPTS=-d %BUILDDIR%/doctrees %SPHINXOPTS% /home/ben/dev/python/detectoid/git/docs/source
+set I18NSPHINXOPTS=%SPHINXOPTS% /home/ben/dev/python/detectoid/git/docs/source
 if NOT "%PAPER%" == "" (
 	set ALLSPHINXOPTS=-D latex_paper_size=%PAPER% %ALLSPHINXOPTS%
 	set I18NSPHINXOPTS=-D latex_paper_size=%PAPER% %I18NSPHINXOPTS%

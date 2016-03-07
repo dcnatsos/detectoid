@@ -3,16 +3,16 @@
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
-SPHINXBUILD = /home/ben/dev/python/destructoid/git/bin/python /home/ben/dev/python/destructoid/git/bin/sphinx-build
+SPHINXBUILD = /home/ben/dev/python/detectoid/git/bin/python /home/ben/dev/python/detectoid/git/bin/sphinx-build
 PAPER         =
-BUILDDIR      = /home/ben/dev/python/destructoid/git/docs
+BUILDDIR      = /home/ben/dev/python/detectoid/git/docs
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
-ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) /home/ben/dev/python/destructoid/git/docs/source
+ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) /home/ben/dev/python/detectoid/git/docs/source
 # the i18n builder cannot share the environment and doctrees with the others
-I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) /home/ben/dev/python/destructoid/git/docs/source
+I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) /home/ben/dev/python/detectoid/git/docs/source
 
 .PHONY: help clean html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest gettext
 
