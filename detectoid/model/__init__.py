@@ -24,7 +24,7 @@ def get_session():
             User: db_engine
         }
 
-        session_maker = sessionmaker(autocommit=True)
+        session_maker = sessionmaker(autocommit=True, expire_on_commit=False)
         session_maker.configure(binds=binds)
 
     return session_maker()

@@ -74,7 +74,6 @@ class Twitch(object):
                         updated=parse_date(record["updated_at"]),
                         follows=follows)
             self.db.add(user)
-            self.db.flush()
 
         logger.debug("loaded user %s", username)
 

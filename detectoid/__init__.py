@@ -7,6 +7,7 @@ Detectoid, a simple website to guess whether a Twitch stream has viewbots
 
 from pyramid.config import Configurator
 
+from detectoid.request import Request
 from detectoid.config import set_config
 
 
@@ -14,7 +15,8 @@ def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
     set_config(settings)
-    config = Configurator(settings=settings)
+    config = Configurator(settings=settings,
+                          request_factory=Request)
 
     config.include('pyramid_chameleon')
     config.add_static_view('static', 'static', cache_max_age=3600)
