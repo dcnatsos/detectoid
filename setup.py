@@ -4,6 +4,9 @@ from setuptools import setup
 required = [
     'setuptools',
     'waitress',
+    'pyramid',
+    'pyramid_chameleon',
+    'pyramid_debugtoolbar',
     'sqlalchemy',
     'requests',
 ]
