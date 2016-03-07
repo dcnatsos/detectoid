@@ -18,8 +18,6 @@
           <td>${user.follows}</td>
         </tr>
       </tbody>
-
-      <td>
     </table>
 
   </div>

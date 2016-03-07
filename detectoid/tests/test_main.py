@@ -8,6 +8,7 @@ import unittest
 from pyramid import testing
 from paste.deploy.loadwsgi import appconfig
 from webtest import TestApp
+from mock import patch
 
 from detectoid import main
 
@@ -34,7 +35,8 @@ class HomeTests(IntegrationTestBase):
     /home tests
     """
 
-    def test_home(self):
+    @patch("detectoid.twitch.Twitch.streams")
+    def test_home(self, streams):
         """
         /home
         """

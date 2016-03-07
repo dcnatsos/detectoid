@@ -8,6 +8,27 @@
       </p>
     </div>
 
+    <table class="table">
+      <thead>
+        <tr>
+          <th>name</th>
+          <th>chatters</th>
+          <th>viewers</th>
+          <th>followers</th>
+          <th>views</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr tal:repeat="stream streams">
+          <td>${stream.name}</td>
+          <td>${stream.chatters}</td>
+          <td>${stream.viewers}</td>
+          <td>${stream.followers}</td>
+          <td>${stream.views}</td>
+        </tr>
+      </tbody>
+    </table>
+
   </div>
 
   <tal:block metal:fill-slot="head">

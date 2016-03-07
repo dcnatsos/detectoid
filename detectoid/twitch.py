@@ -14,6 +14,7 @@ from detectoid.model.user import User
 logger = logging.getLogger()
 
 endpoints = {
+    'streams': "https://api.twitch.tv/kraken/streams?limit=10",
     'chatters': "http://tmi.twitch.tv/group/user/{}/chatters",
     'profile': "https://api.twitch.tv/kraken/users/{}",
     'follows': "https://api.twitch.tv/kraken/users/{}/follows/channels?limit=1",
@@ -32,19 +33,67 @@ class Twitch(object):
 
         self.db = get_session()
 
+    def _load_json(self, uri):
+        try:
+            return self.tcp.get(uri).json()
+        except (json.decoder.JSONDecodeError, TypeError):
+            logger.warning("failed to load the json at %s", uri)
+
+    def streams(self):
+        """
+        Returns a list of top streams with their chatters numbers
+        """
+        data = self._load_json(endpoints['streams'])
+
+        if data is None:
+            logger.warning("no data in streams()")
+            return None
+
+        result = []
+        for stream in data["streams"]:
+            chatters = self._list_chatters(stream["channel"]["name"])
+
+            if chatters is None:
+                count = 0
+            else:
+                count = len(chatters)
+
+            result.append({
+                "name": stream["channel"]["name"],
+                "chatters": count,
+                "viewers": stream["viewers"],
+                "followers": stream["channel"]["followers"],
+                "views": stream["channel"]["views"],
+            })
+
+        return result
+
+    def _list_chatters(self, channel):
+        """
+        Returns a list of usernames logged into a chat channel
+        """
+        data = self._load_json(endpoints['chatters'].format(channel))
+
+        if data is None:
+            logger.warning("no data in _list_chatters(%s)", channel)
+            return None
+
+        if "chatters" not in data:
+            logger.warning("bogus data in _list_chatters(%s)", channel)
+            return None
+
+        return data["chatters"]["viewers"]
+
     def chatters(self, channel):
         """
-        Returns a list of users logged into a chat channel
+        Returns a list of Users logged into a chat channel
         """
-        try:
-            r = self.tcp.get(endpoints['chatters'].format(channel))
-            r = r.json()
+        names = self._list_chatters(channel)
 
-            return [self.user(name) for name in r["chatters"]["viewers"]]
-        except json.decoder.JSONDecodeError:
-            logger.exception("error while loading %s", channel)
-        except TypeError:
-            logger.exception("error while loading %s", channel)
+        if names is None:
+            return None
+
+        return [self.user(name) for name in names]
 
     def user(self, username):
         """
@@ -83,24 +132,29 @@ class Twitch(object):
         """
         Returns a user profile, as a dictionnary, loaded from Twitch
         """
-        try:
-            r = self.tcp.get(endpoints['profile'].format(username))
-            r = r.json()
+        data = self._load_json(endpoints['profile'].format(username))
 
-            if "created_at" in r:
-                return r
-        except json.decoder.JSONDecodeError:
-            logger.warning("bogus user record received for %s", username)
+        if data is None:
+            logger.warning("no data in _user_profile(%s)", username)
+            return None
+
+        if "created_at" not in data:
+            return None
+
+        return data
 
     def _user_follows(self, username):
         """
         Returns the number of channels followed by a user
         """
-        try:
-            r = self.tcp.get(endpoints['follows'].format(username))
-            r = r.json()
+        data = self._load_json(endpoints['follows'].format(username))
 
-            if "_total" in r:
-                return r["_total"]
-        except json.decoder.JSONDecodeError:
-            logger.warning("bogus follows record received for %s", username)
+        if data is None:
+            logger.warning("no data in _user_follows(%s)", username)
+            return None
+
+        if "_total" not in data:
+            logger.warning("bogus data in _user_follows(%s)", username)
+            return None
+
+        return data["_total"]
