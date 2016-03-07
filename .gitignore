@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+
+bin/
+eggs/
+docs/html/
+docs/doctrees/
+develop-eggs/
+destructoid.egg-info/
+
+.installed.cfg
+.coverage
+coverage.xml
+nosetests.xml
+
+dev.ini
+tests.ini
