@@ -18,3 +18,4 @@ docs/doctrees/
 
 dev.ini
 tests.ini
+*.db

@@ -8,6 +8,7 @@ import logging
 import json
 import requests
 
+from detectoid.config import get_config
 from detectoid.model import get_session
 from detectoid.model.user import User
 
@@ -29,7 +30,7 @@ class Twitch(object):
 
     def __init__(self):
         self.tcp = requests.Session()
-        self.tcp.headers.update({'client_id': "detectoid_client"})
+        self.tcp.headers.update({'client_id': get_config()["twitch.client_id"]})
 
         self.db = get_session()
 
