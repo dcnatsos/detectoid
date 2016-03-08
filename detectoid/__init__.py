@@ -21,7 +21,7 @@ def main(global_config, **settings):
 
     config.add_route('home', '/')
     config.add_route('streams', '/streams')
-    config.add_route('chatters', '/{channel}')
+    config.add_route('channel', '/{channel}')
     config.add_route('distribution', '/{channel}/distribution')
 
     config.scan(ignore='detectoid.tests')

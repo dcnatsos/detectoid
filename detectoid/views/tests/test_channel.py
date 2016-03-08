@@ -5,7 +5,7 @@ from mock import Mock, patch  # NOQA
 from pyramid import testing
 import pyramid.httpexceptions as exc
 
-from detectoid.views.channel import chatters, distribution  # NOQA
+from detectoid.views.channel import channel, distribution  # NOQA
 from detectoid.model.user import User
 
 
@@ -18,7 +18,7 @@ class ChannelTests(unittest.TestCase):
         testing.tearDown()
 
     @patch("detectoid.twitch.Twitch.chatters")
-    def test_chatters(self, twitch_chatters):
+    def test_channel(self, twitch_chatters):
         """
         """
         request = testing.DummyRequest()
@@ -30,19 +30,19 @@ class ChannelTests(unittest.TestCase):
             User(name="bar", created=now, updated=now, follows=1),
         ]
 
-        result = chatters(request)
+        result = channel(request)
 
         self.assertEqual(len(result["chatters"]), 2)
         self.assertEqual(result["chatters"][0].__json__(Mock())["name"], "foo")
 
     @patch("detectoid.twitch.Twitch.chatters", return_value=None)
-    def test_chatters_500(self, twitch_chatters):
+    def test_channel_500(self, twitch_chatters):
         """
         """
         request = testing.DummyRequest()
         request.matchdict = {'channel': "foobarbaz"}
         self.assertRaises(exc.HTTPInternalServerError,
-                          lambda: chatters(request))
+                          lambda: channel(request))
 
     @patch("detectoid.twitch.Twitch.chatters")
     def test_distribution(self, twitch_chatters):

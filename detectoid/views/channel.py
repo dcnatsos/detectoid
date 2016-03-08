@@ -9,20 +9,20 @@ from detectoid.twitch import Twitch
 from detectoid.utils import group_by_date
 
 
-@view_config(route_name='chatters', renderer='detectoid:templates/chatters.pt',
+@view_config(route_name='channel', renderer='detectoid:templates/channel.pt',
              accept="text/html")
-@view_config(route_name='chatters', renderer='json')
-def chatters(request):
+@view_config(route_name='channel', renderer='json')
+def channel(request):
     """
     /{channel}
 
     - channel: stream name
     """
-    channel = request.matchdict["channel"].lower()
-    users = Twitch().chatters(channel)
+    name = request.matchdict["channel"].lower()
+    users = Twitch().chatters(name)
 
     if users is None:
-        raise exc.HTTPInternalServerError("Error while loading channel details {}".format(channel))
+        raise exc.HTTPInternalServerError("Error while loading channel details {}".format(name))
 
     return {
         'chatters': users,
