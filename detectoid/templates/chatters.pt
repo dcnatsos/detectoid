@@ -7,7 +7,7 @@
           <th>Username</th>
           <th>Created</th>
           <th>Updated</th>
-          <th>Follows</th>
+          <!--<th>Follows</th>-->
         </tr>
       </thead>
       <tbody>
@@ -15,7 +15,7 @@
           <td>${user.name}</td>
           <td>${user.created}</td>
           <td>${user.updated}</td>
-          <td>${user.follows}</td>
+          <!--<td>${user.follows}</td>-->
         </tr>
       </tbody>
     </table>

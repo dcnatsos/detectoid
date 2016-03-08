@@ -113,10 +113,10 @@ class Twitch(object):
                 return None
 
             # load follows count
-            follows = self._user_follows(username)
+            # follows = self._user_follows(username)
 
-            if follows is None:
-                follows = 0
+            # if follows is None:
+            follows = 0
 
             user = User(name=record["name"],
                         created=parse_date(record["created_at"]),
