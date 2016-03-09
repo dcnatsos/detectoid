@@ -20,7 +20,6 @@ def main(global_config, **settings):
     config.add_static_view('static', 'static', cache_max_age=3600)
 
     config.add_route('home', '/')
-    config.add_route('streams', '/streams')
     config.add_route('channel', '/{channel}')
     config.add_route('distribution', '/{channel}/distribution')
 
