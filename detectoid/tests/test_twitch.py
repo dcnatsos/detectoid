@@ -14,6 +14,7 @@ class TwitchTests(TestCase):
 
     def setUp(self):
         self.db = get_session()
+        self.db.query(User).delete()
 
     def create_user(self, username):
         created = datetime.datetime.now()
@@ -41,72 +42,6 @@ class TwitchTests(TestCase):
 
         self.assertEqual(None, twitch._load_json("baz"))
 
-    def test_streams(self):
-        """
-        """
-        stream = {
-            "streams": [{
-                "viewers": 25,
-                "channel": {
-                    "name": "foo",
-                    "views": 1000,
-                    "followers": 200,
-                },
-            }]
-        }
-        chatters = {
-            "chatters": {
-                "viewers": ["foo", "bar", "baz"]
-            }
-        }
-
-        twitch = Twitch()
-        mock_response = Mock()
-        mock_response.json.side_effect = [stream, chatters]
-        twitch.tcp.get = Mock(return_value=mock_response)
-
-        result = twitch.streams()
-
-        self.assertEqual(1, len(result))
-        self.assertEqual(result[0]["chatters"],
-                         len(chatters["chatters"]["viewers"]))
-        self.assertEqual(result[0]["viewers"],
-                         stream["streams"][0]["viewers"])
-        self.assertEqual(result[0]["followers"],
-                         stream["streams"][0]["channel"]["followers"])
-        self.assertEqual(result[0]["views"],
-                         stream["streams"][0]["channel"]["views"])
-
-    @patch('detectoid.twitch.Twitch._load_json', return_value=None)
-    def test_streams_failed(self, _load_json):
-        """
-        """
-        twitch = Twitch()
-
-        self.assertEqual(None, twitch.streams())
-
-    @patch('detectoid.twitch.Twitch._list_chatters', return_value=None)
-    def test_streams_bogus(self, _list_chatters):
-        """
-        """
-        stream = {
-            "streams": [{
-                "viewers": 25,
-                "channel": {
-                    "name": "foo",
-                    "views": 1000,
-                    "followers": 200,
-                },
-            }]
-        }
-
-        twitch = Twitch()
-        mock_response = Mock()
-        mock_response.json.return_value = stream
-        twitch.tcp.get = Mock(return_value=mock_response)
-
-        self.assertNotEqual(None, twitch.streams())
-
     def test_chatters(self):
         """
         """
@@ -114,7 +49,7 @@ class TwitchTests(TestCase):
         user = self.create_user(username)
         chatters = {
             "chatters": {
-                "viewers": [username]
+                "viewers": [username, "foobar"]
             }
         }
         twitch = Twitch()
@@ -140,15 +75,7 @@ class TwitchTests(TestCase):
 
         self.assertEqual(None, twitch.chatters("boo"))
 
-    def test_user(self):
-        """
-        """
-        twitch = Twitch()
-        user = self.create_user("foobar")
-
-        self.assertEqual(user, twitch.user(user.name))
-
-    def test_user_load(self):
+    def test_load_user(self):
         """
         """
         record = {
@@ -161,20 +88,20 @@ class TwitchTests(TestCase):
         twitch._user_profile = Mock(return_value=record)
         twitch._user_follows = Mock(return_value=None)
 
-        user = twitch.user(record["name"])
+        user = twitch._load_user(record["name"])
 
         self.assertEqual(user.name, record["name"])
         self.assertEqual(user.created, parse_date(record["created_at"]))
         self.assertEqual(user.updated, parse_date(record["updated_at"]))
         self.assertEqual(user.follows, 0)
 
-    def test_user_load_failed(self):
+    def test_load_user_failed(self):
         """
         """
         twitch = Twitch()
         twitch._user_profile = Mock(return_value=None)
 
-        self.assertEqual(None, twitch.user("foo11"))
+        self.assertEqual(None, twitch._load_user("foo11"))
 
     def test_user_profile(self):
         """

@@ -15,7 +15,6 @@ from detectoid.model.user import User
 logger = logging.getLogger()
 
 endpoints = {
-    'streams': "https://api.twitch.tv/kraken/streams?limit=10",
     'chatters': "http://tmi.twitch.tv/group/user/{}/chatters",
     'profile': "https://api.twitch.tv/kraken/users/{}",
     'follows': "https://api.twitch.tv/kraken/users/{}/follows/channels?limit=1",
@@ -40,34 +39,32 @@ class Twitch(object):
         except (json.decoder.JSONDecodeError, TypeError):
             logger.warning("failed to load the json at %s", uri)
 
-    def streams(self):
+    def chatters(self, channel):
         """
-        Returns a list of top streams with their chatters numbers
+        Returns a list of Users logged into a chat channel
         """
-        data = self._load_json(endpoints['streams'])
+        names = self._list_chatters(channel)
 
-        if data is None:
-            logger.warning("no data in streams()")
+        if names is None:
             return None
 
-        result = []
-        for stream in data["streams"]:
-            chatters = self._list_chatters(stream["channel"]["name"])
+        # load existing users from db and schedule others to be loaded from Twitch
+        users = []
+        to_load = []
+        for name in names:
+            user = self.db.query(User).filter(User.name == name).one_or_none()
 
-            if chatters is None:
-                count = 0
+            if user:
+                users.append(user)
             else:
-                count = len(chatters)
+                to_load.append(name)
 
-            result.append({
-                "name": stream["channel"]["name"],
-                "chatters": count,
-                "viewers": stream["viewers"],
-                "followers": stream["channel"]["followers"],
-                "views": stream["channel"]["views"],
-            })
+        # load new users
+        new_users = self._load_users(to_load)
+        self.db.bulk_save_objects(new_users, return_defaults=True)
+        users.extend(new_users)
 
-        return result
+        return users
 
     def _list_chatters(self, channel):
         """
@@ -85,47 +82,35 @@ class Twitch(object):
 
         return data["chatters"]["viewers"]
 
-    def chatters(self, channel):
-        """
-        Returns a list of Users logged into a chat channel
-        """
-        names = self._list_chatters(channel)
+    def _load_users(self, names):
+        users = [self._load_user(name) for name in names]
+        users = list(filter(None.__ne__, users))
 
-        if names is None:
-            return None
+        return users
 
-        return [self.user(name) for name in names]
-
-    def user(self, username):
+    def _load_user(self, username):
         """
         Returns a loaded User object from its username
         """
-        # try to load the user record from db
-        user = self.db.query(User).filter(User.name == username).one_or_none()
+        # new user, load details and persist it
+        logger.debug("loading new user %s", username)
 
-        # if it's a new user, load details and persist it
-        if user is None:
-            logger.debug("loading new user %s", username)
+        # load user profile
+        record = self._user_profile(username)
 
-            # load user profile
-            record = self._user_profile(username)
+        if record is None:
+            return None
 
-            if record is None:
-                return None
+        # load follows count
+        # follows = self._user_follows(username)
 
-            # load follows count
-            # follows = self._user_follows(username)
+        # if follows is None:
+        follows = 0
 
-            # if follows is None:
-            follows = 0
-
-            user = User(name=record["name"],
-                        created=parse_date(record["created_at"]),
-                        updated=parse_date(record["updated_at"]),
-                        follows=follows)
-            self.db.add(user)
-
-        logger.debug("loaded user %s", username)
+        user = User(name=record["name"],
+                    created=parse_date(record["created_at"]),
+                    updated=parse_date(record["updated_at"]),
+                    follows=follows)
 
         return user
 
