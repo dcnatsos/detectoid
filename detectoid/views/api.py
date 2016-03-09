@@ -5,10 +5,9 @@ from pyramid.view import view_config
 import pyramid.httpexceptions as exc
 
 from detectoid.twitch import Twitch
-from detectoid.utils import group_by_date
 
 
-@view_config(route_name='stream', renderer='json')
+@view_config(route_name='stream')
 def stream(request):
     """
     /{stream}
@@ -30,15 +29,14 @@ def stream(request):
         'stream': info,
     }
 
-@view_config(route_name='distribution', renderer='json')
-def distribution(request):
+@view_config(route_name='chatters')
+def chatters(request):
     """
     /{stream}
 
     - stream: stream name
 
-    Returns a list of chatters with their registration date and a daily
-    count of users registrations
+    Returns a list of chatters with their registration date
     """
     channel = request.matchdict["stream"].lower()
     users = Twitch().chatters(channel)
@@ -46,14 +44,6 @@ def distribution(request):
     if users is None:
         raise exc.HTTPInternalServerError("Error while loading channel details {}".format(channel))
 
-    groups = group_by_date(users)
-
     return {
         'chatters': users,
-        'distribution': [{
-                'date': date,
-                'count': count,
-            }
-            for date, count in groups.items()
-        ],
     }

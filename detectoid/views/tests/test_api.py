@@ -5,7 +5,7 @@ from mock import Mock, patch  # NOQA
 from pyramid import testing
 import pyramid.httpexceptions as exc
 
-from detectoid.views.api import stream, distribution  # NOQA
+from detectoid.views.api import stream, chatters  # NOQA
 from detectoid.model.user import User
 
 
@@ -19,7 +19,7 @@ class ChannelTests(unittest.TestCase):
 
     @patch('detectoid.twitch.Twitch._load_json')
     @patch('detectoid.twitch.Twitch._list_chatters')
-    def test_channel(self, list_chatters, load_json):
+    def test_stream(self, list_chatters, load_json):
         """
         """
         request = testing.DummyRequest()
@@ -51,7 +51,7 @@ class ChannelTests(unittest.TestCase):
         self.assertEqual(result["stream"]["chatters"], 3)
 
     @patch('detectoid.twitch.Twitch._load_json', return_value=None)
-    def test_channel_invalid_channel(self, load_json):
+    def test_stream_invalid_stream(self, load_json):
         """
         """
         request = testing.DummyRequest()
@@ -59,7 +59,7 @@ class ChannelTests(unittest.TestCase):
         self.assertRaises(exc.HTTPInternalServerError, lambda: stream(request))
 
     @patch('detectoid.twitch.Twitch._load_json')
-    def test_channel_offline_channel(self, load_json):
+    def test_stream_offline_stream(self, load_json):
         """
         """
         request = testing.DummyRequest()
@@ -70,7 +70,7 @@ class ChannelTests(unittest.TestCase):
         self.assertRaises(exc.HTTPNotFound, lambda: stream(request))
 
     @patch("detectoid.twitch.Twitch.chatters")
-    def test_distribution(self, twitch_chatters):
+    def test_chatters(self, twitch_chatters):
         """
         """
         request = testing.DummyRequest()
@@ -82,16 +82,15 @@ class ChannelTests(unittest.TestCase):
             User(name="bar", created=now, updated=now, follows=1),
         ]
 
-        result = distribution(request)
+        result = chatters(request)
 
-        self.assertEqual(len(result["distribution"]), 1)
-        self.assertEqual(result["distribution"][0]["count"], 2)
+        self.assertEqual(len(result["chatters"]), 2)
 
     @patch("detectoid.twitch.Twitch.chatters", return_value=None)
-    def test_distribution_500(self, chatters):
+    def test_chatters_500(self, twitch_chatters):
         """
         """
         request = testing.DummyRequest()
         request.matchdict = {'stream': "foobarbaz"}
         self.assertRaises(exc.HTTPInternalServerError,
-                          lambda: distribution(request))
+                          lambda: chatters(request))
