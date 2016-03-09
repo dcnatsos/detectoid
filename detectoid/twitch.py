@@ -46,10 +46,15 @@ class Twitch(object):
         """
         data = self._load_json(endpoints['stream'].format(name))
 
+        print(data)
+
         if data is None:
             return None
 
-        if data["stream"] is None:
+        if "status" in data and data["status"] in [404, 422]:
+            return False
+
+        if "stream" not in data or data["stream"] is None:
             return False
 
         chatters = self._list_chatters(name)

@@ -7,7 +7,7 @@ import pyramid.httpexceptions as exc
 from detectoid.twitch import Twitch
 
 
-@view_config(route_name='stream')
+@view_config(route_name='stream', renderer="json")
 def stream(request):
     """
     /{stream}
@@ -29,7 +29,7 @@ def stream(request):
         'stream': info,
     }
 
-@view_config(route_name='chatters')
+@view_config(route_name='chatters', renderer="json")
 def chatters(request):
     """
     /{stream}

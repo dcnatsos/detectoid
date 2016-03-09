@@ -8,7 +8,57 @@
       </p>
     </div>
 
+    <form action="" class="search-form">
+      <div class="form-group has-feedback">
+        <label for="search" class="sr-only">Search</label>
+        <input type="text" class="form-control" name="search" id="search" placeholder="stream">
+        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+      </div>
+    </form>
 
+    <div id="loading" style="display: none;">
+      Loading ...
+    </div>
+
+    <div id="error" style="display: none;">
+    </div>
+
+    <div id="stream" style="display: none;">
+      <!--<h3 class="name"></h3>-->
+
+      <label class="viewers">
+        <big class="value"></big> viewers
+      </label>
+
+      <label class="chatters">
+        <big class="value"></big> chatters
+      </label>
+
+      <label class="followers">
+        <big class="value"></big> followers
+      </label>
+
+      <label class="views">
+        <big class="value"></big> views
+      </label>
+    </div>
+
+    <div id="chatters" style="display: none;">
+      <button id="dig" class="btn btn-primary">Dig deeper</button>
+
+      <table class="table">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Created</th>
+          <th>Updated</th>
+          <!--<th>Follows</th>-->
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+    </div>
   </div>
 
   <tal:block metal:fill-slot="head">
