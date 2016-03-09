@@ -15,6 +15,7 @@ from detectoid.model.user import User
 logger = logging.getLogger()
 
 endpoints = {
+    'stream': "https://api.twitch.tv/kraken/streams/{}",
     'chatters': "http://tmi.twitch.tv/group/user/{}/chatters",
     'profile': "https://api.twitch.tv/kraken/users/{}",
     'follows': "https://api.twitch.tv/kraken/users/{}/follows/channels?limit=1",
@@ -38,6 +39,33 @@ class Twitch(object):
             return self.tcp.get(uri).json()
         except (json.decoder.JSONDecodeError, TypeError):
             logger.warning("failed to load the json at %s", uri)
+
+    def stream(self, name):
+        """
+        Returns basic stats about a stream
+        """
+        data = self._load_json(endpoints['stream'].format(name))
+
+        if data is None:
+            return None
+
+        if data["stream"] is None:
+            return False
+
+        chatters = self._list_chatters(name)
+
+        if chatters is None:
+            chatters_count = 0
+        else:
+            chatters_count = len(chatters)
+
+        return {
+            'name': data["stream"]["channel"]["display_name"],
+            'views': data["stream"]["channel"]["views"],
+            'followers': data["stream"]["channel"]["followers"],
+            'viewers': data["stream"]["viewers"],
+            'chatters': chatters_count,
+        }
 
     def chatters(self, channel):
         """
@@ -83,6 +111,9 @@ class Twitch(object):
         return data["chatters"]["moderators"] + data["chatters"]["viewers"]
 
     def _load_users(self, names):
+        """
+        Returns Users objects loaded from Twitch
+        """
         users = [self._load_user(name) for name in names]
         users = list(filter(None.__ne__, users))
 
@@ -107,6 +138,7 @@ class Twitch(object):
         # if follows is None:
         follows = 0
 
+        # TODO: the Twitch to ORM conversion might be done somewhere else
         user = User(name=record["name"],
                     created=parse_date(record["created_at"]),
                     updated=parse_date(record["updated_at"]),

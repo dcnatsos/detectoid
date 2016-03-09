@@ -6,10 +6,10 @@ Routes
 
 Homepage
 
-/{channel}
+API
 ----------
 
-.. automodule:: detectoid.views.channel
+.. automodule:: detectoid.views.api
    :private-members:
    :members:
    :undoc-members:
