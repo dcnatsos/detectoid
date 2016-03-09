@@ -45,11 +45,12 @@ class TwitchTests(TestCase):
     def test_chatters(self):
         """
         """
-        username = "viewer"
-        user = self.create_user(username)
+        viewer = self.create_user("viewer")
+        moderator = self.create_user("moderator")
         chatters = {
             "chatters": {
-                "viewers": [username, "foobar"]
+                "viewers": [viewer.name, "foobar"],
+                "moderators": [moderator.name]
             }
         }
         twitch = Twitch()
@@ -57,7 +58,7 @@ class TwitchTests(TestCase):
         mock_response.json.return_value = chatters
         twitch.tcp.get = Mock(return_value=mock_response)
 
-        self.assertEqual(twitch.chatters("foo"), [user])
+        self.assertEqual(twitch.chatters("foo"), [moderator, viewer])
 
     @patch('detectoid.twitch.Twitch._load_json', return_value=None)
     def test_chatters_failed(self, _load_json):

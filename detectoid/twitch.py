@@ -80,7 +80,7 @@ class Twitch(object):
             logger.warning("bogus data in _list_chatters(%s)", channel)
             return None
 
-        return data["chatters"]["viewers"]
+        return data["chatters"]["moderators"] + data["chatters"]["viewers"]
 
     def _load_users(self, names):
         users = [self._load_user(name) for name in names]
