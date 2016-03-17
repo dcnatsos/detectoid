@@ -15,6 +15,7 @@ from detectoid.model.user import User
 logger = logging.getLogger()
 
 endpoints = {
+    'streams': "https://api.twitch.tv/kraken/streams?limit=25&{}",
     'stream': "https://api.twitch.tv/kraken/streams/{}",
     'chatters': "http://tmi.twitch.tv/group/user/{}/chatters",
     'profile': "https://api.twitch.tv/kraken/users/{}",
@@ -38,15 +39,19 @@ class Twitch(object):
         try:
             return self.tcp.get(uri).json()
         except (json.decoder.JSONDecodeError, TypeError):
-            logger.warning("failed to load the json at %s", uri)
+            try:
+                return self.tcp.get(uri).json()
+            except (json.decoder.JSONDecodeError, TypeError):
+                logger.warning("failed to load the json at %s", uri)
 
-    def stream(self, name):
+    def streams(self, game):
         """
-        Returns basic stats about a stream
+        Returns basic stats about the top 20/25 streams of a section
         """
-        data = self._load_json(endpoints['stream'].format(name))
-
-        print(data)
+        if game is None:
+            data = self._load_json(endpoints['streams'].format(""))
+        else:
+            data = self._load_json(endpoints['streams'].format("game="+game))
 
         if data is None:
             return None
@@ -54,23 +59,31 @@ class Twitch(object):
         if "status" in data and data["status"] in [404, 422]:
             return False
 
+        if "streams" not in data or data["streams"] is None:
+            return False
+
+        streams = []
+        for stream in data["streams"]:
+            info = self._stream_details(stream)
+
+            if info:
+                streams.append(info)
+
+        return streams
+
+    def stream(self, name):
+        """
+        Returns basic stats about a stream
+        """
+        data = self._load_json(endpoints['stream'].format(name))
+
+        if "status" in data and data["status"] in [404, 422]:
+            return False
+
         if "stream" not in data or data["stream"] is None:
             return False
 
-        chatters = self._list_chatters(name)
-
-        if chatters is None:
-            chatters_count = 0
-        else:
-            chatters_count = len(chatters)
-
-        return {
-            'name': data["stream"]["channel"]["display_name"],
-            'views': data["stream"]["channel"]["views"],
-            'followers': data["stream"]["channel"]["followers"],
-            'viewers': data["stream"]["viewers"],
-            'chatters': chatters_count,
-        }
+        return self._stream_details(data["stream"] )
 
     def chatters(self, channel):
         """
@@ -98,6 +111,28 @@ class Twitch(object):
         users.extend(new_users)
 
         return users
+
+    def _stream_details(self, data):
+        """
+        Returns details about a stream from pre-loaded data
+        """
+        if data is None:
+            return None
+
+        chatters = self._list_chatters(data["channel"]["name"])
+
+        if chatters is None:
+            chatters_count = 0
+        else:
+            chatters_count = len(chatters)
+
+        return {
+            'name': data["channel"]["display_name"],
+            'views': data["channel"]["views"],
+            'followers': data["channel"]["followers"],
+            'viewers': data["viewers"],
+            'chatters': chatters_count,
+        }
 
     def _list_chatters(self, channel):
         """

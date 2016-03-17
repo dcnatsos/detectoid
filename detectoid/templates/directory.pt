@@ -1,0 +1,42 @@
+<metal:main use-macro="load: layout.pt" >
+  <div class="col-md-12" metal:fill-slot="content">
+
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            Name
+          </th>
+          <th>
+            Chatters
+          </th>
+          <th>
+            Viewers
+          </th>
+          <th>
+            Ratio
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr tal:repeat="stream streams">
+          <td>
+            ${stream["name"]}
+          </td>
+          <td>
+            ${stream["chatters"]}
+          </td>
+          <td>
+            ${stream["viewers"]}
+          </td>
+          <td>
+            ${stream["chatters"] / stream["viewers"] * 100}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+</metal:main>
