@@ -15,7 +15,7 @@ from detectoid.model.user import User
 logger = logging.getLogger()
 
 endpoints = {
-    'streams': "https://api.twitch.tv/kraken/streams?limit=25&{}",
+    'streams': "https://api.twitch.tv/kraken/streams?limit=15&{}",
     'stream': "https://api.twitch.tv/kraken/streams/{}",
     'chatters': "http://tmi.twitch.tv/group/user/{}/chatters",
     'profile': "https://api.twitch.tv/kraken/users/{}",
