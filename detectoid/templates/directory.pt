@@ -1,7 +1,6 @@
 <metal:main use-macro="load: layout.pt" >
   <div class="col-md-12" metal:fill-slot="content">
 
-
     <table class="table">
       <thead>
         <tr>
@@ -17,12 +16,15 @@
           <th>
             Ratio
           </th>
+          <th>
+            Verdict
+          </th>
         </tr>
       </thead>
       <tbody>
         <tr tal:repeat="stream streams">
           <td>
-            ${stream["name"]}
+            <a href="https://www.twitch.tv/${stream['name']}" target="_blank" title="view on Twitch">${stream["name"]}</a>
           </td>
           <td>
             ${stream["chatters"]}
@@ -31,7 +33,18 @@
             ${stream["viewers"]}
           </td>
           <td>
-            ${stream["chatters"] / stream["viewers"] * 100}
+            ${"{:2.0%}".format(stream["chatters"] / stream["viewers"])}
+          </td>
+          <td>
+            <span tal:condition="stream['chatters'] / stream['viewers'] <= 0.4">
+              <img src="${request.static_url('detectoid:static/img/wut.png')}">
+            </span>
+            <span tal:condition="stream['chatters'] / stream['viewers'] > 0.4 and stream['chatters'] / stream['viewers'] <= 0.6">
+              <img src="${request.static_url('detectoid:static/img/op.png')}">
+            </span>
+            <span tal:condition="stream['chatters'] / stream['viewers'] > 0.6">
+              <img src="${request.static_url('detectoid:static/img/gg.png')}">
+            </span>
           </td>
         </tr>
       </tbody>
