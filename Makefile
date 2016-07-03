@@ -1,6 +1,4 @@
 all: nosetests flake
-doc: html
-include docs/Makefile
 
 go-dev:
 	ln -sf dev.cfg buildout.cfg
@@ -16,3 +14,13 @@ test:
 flake:
 	@echo "==== Running Flake8 ===="
 	@bin/flake8 detectoid/*.py
+
+clean:
+	rm -r bin/ eggs/ detectoid.egg-info/
+	rm .installed.cfg .coverage coverage.xml nosetests.xml
+	rm -r docs/html/ docs/doctrees/ docs/Makefile docs/make.bat
+	find . -name "*.pyc" -delete
+
+doc:
+	include docs/Makefile
+	make html
