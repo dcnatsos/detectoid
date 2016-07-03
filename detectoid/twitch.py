@@ -86,7 +86,7 @@ class Twitch(object):
         if "stream" not in data or data["stream"] is None:
             return False
 
-        return self._stream_details(data["stream"] )
+        return self._stream_details(data["stream"])
 
     def chatters(self, channel):
         """
