@@ -1,23 +1,16 @@
 <metal:main use-macro="load: layout.pt" >
   <div class="col-md-12" metal:fill-slot="content">
 
-    <div class="jumbotron">
-      <h1>Detectoid, the <em>MrDestructoid</em> detector</h1>
-      <p class="lead">
-        Detect viewbots in Twitch streams.
-      </p>
-    </div>
-
     <form action="" class="search-form">
       <div class="form-group has-feedback">
-        <label for="search" class="sr-only">Search</label>
-        <input type="text" class="form-control" name="search" id="search" placeholder="stream">
+        <label for="search" class="sr-only"></label>
+        <input type="text" class="form-control" name="search" id="search" placeholder="check dat stream">
         <span class="glyphicon glyphicon-search form-control-feedback"></span>
       </div>
     </form>
 
     <div id="loading" style="display: none;">
-      Loading ...
+      Loading...
     </div>
 
     <div id="error" style="display: none;">
@@ -43,22 +36,6 @@
       </label>
     </div>
 
-    <div id="chatters" style="display: none;">
-      <button id="dig" class="btn btn-primary">Dig deeper</button>
-
-      <table class="table">
-      <thead>
-        <tr>
-          <th>Username</th>
-          <th>Created</th>
-          <th>Updated</th>
-          <!--<th>Follows</th>-->
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
-    </div>
   </div>
 
   <tal:block metal:fill-slot="head">

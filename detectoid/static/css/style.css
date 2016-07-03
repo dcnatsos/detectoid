@@ -3,3 +3,15 @@ big {
   color: #b42525;
   font-size: 150%;
 }
+
+body {
+    background-image: url("http://i.imgur.com/pjwbZjo.gif");
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    min-height: 500px;
+}
+
+nav.navbar-inverse  {
+    background-color: rgb(100, 65, 164);
+    background-image: none;
+}
