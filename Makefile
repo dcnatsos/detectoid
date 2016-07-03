@@ -21,5 +21,8 @@ clean:
 	rm -r docs/html/ docs/doctrees/ docs/Makefile docs/make.bat
 	find . -name "*.pyc" -delete
 
+serve:
+	bin/pserve pyramid.ini
+
 doc:
 	$(MAKE) -C docs html

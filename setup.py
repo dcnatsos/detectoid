@@ -6,11 +6,10 @@ def read(*rnames):
 
 
 required = [
-    'setuptools',
-    'waitress',
     'pyramid',
     'pyramid_chameleon',
     'pyramid_debugtoolbar',
+    'waitress',
     'sqlalchemy',
     'requests',
 ]
