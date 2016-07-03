@@ -1,4 +1,4 @@
-ca<metal:main use-macro="load: layout.pt" >
+<metal:main use-macro="load: layout.pt" >
   <div class="col-md-12" metal:fill-slot="content">
 
     <div class="jumbotron">
