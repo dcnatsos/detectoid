@@ -22,5 +22,4 @@ clean:
 	find . -name "*.pyc" -delete
 
 doc:
-	include docs/Makefile
-	make html
+	$(MAKE) -C docs html
