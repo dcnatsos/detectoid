@@ -7,10 +7,32 @@ import pyramid.httpexceptions as exc
 from detectoid.twitch import Twitch
 
 
+@view_config(route_name='home', renderer='detectoid:templates/directory.pt',
+             accept="text/html")
+def home(request):
+    """
+    /
+
+    Either a simple homepage or a proxy to an api endpoint depending on params
+    """
+    if "stream" in request.params:
+        request.matchdict["stream"] = request.params["stream"]
+        return stream(request)
+    elif "directory" in request.params:
+        request.matchdict["directory"] = request.params["directory"]
+        return directory(request)
+    else:
+        return {
+            'streams': [],
+        }
+
+
 @view_config(route_name='stream', renderer="json")
+@view_config(route_name='stream', renderer='detectoid:templates/directory.pt',
+             accept="text/html")
 def stream(request):
     """
-    /{stream}
+    /stream/{stream}
 
     - stream: stream name
 
@@ -26,37 +48,29 @@ def stream(request):
         raise exc.HTTPNotFound("Offline stream {}".format(name))
 
     return {
-        'stream': info,
+        'streams': [info],
     }
 
 @view_config(route_name='directory', renderer="json")
 @view_config(route_name='directory', renderer='detectoid:templates/directory.pt',
              accept="text/html")
-@view_config(route_name='directory_game', renderer="json")
-@view_config(route_name='directory_game', renderer='detectoid:templates/directory.pt',
-             accept="text/html")
 def directory(request):
     """
-    /directory/all
-    /directory/{game}
+    /directory/{directory} (optional)
 
-    - game: sub-section of the directory
+    - directory: sub-section of the directory
 
     Returns basic stream info (viewers, chatters, followers, etc) for the top 20
     streams in a section
     """
-    try:
-        game = request.matchdict["game"]
-    except KeyError:
-        game = None
-
-    info = Twitch().streams(game)
+    directory = request.matchdict["directory"].lower()
+    info = Twitch().streams(directory)
 
     if info is None:
-        raise exc.HTTPInternalServerError("Error while loading streams details {}".format(section))  # NOQA
+        raise exc.HTTPInternalServerError("Error while loading streams details {}".format(directory))  # NOQA
 
     if info is False:
-        raise exc.HTTPNotFound("Unknown section {}".format(section))
+        raise exc.HTTPNotFound("Unknown directory {}".format(directory))
 
     return {
         'streams': info,

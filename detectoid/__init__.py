@@ -20,10 +20,9 @@ def main(global_config, **settings):
     config.add_static_view('static', 'static', cache_max_age=3600)
 
     config.add_route('home', '/')
-    config.add_route('stream', '/{stream}')
-    config.add_route('directory', '/directory/all')
-    config.add_route('directory_game', '/directory/game/{game}')
-    config.add_route('chatters', '/{stream}/chatters')
+    config.add_route('stream', '/stream/{stream}')
+    config.add_route('chatters', '/stream/{stream}/chatters')
+    config.add_route('directory', '/directory/{directory}')
 
     config.scan(ignore='detectoid.tests')
 

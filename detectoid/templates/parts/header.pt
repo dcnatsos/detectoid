@@ -11,10 +11,6 @@
       <a href="/" class="navbar-brand">Detectoid</a>
     </div>
     <div class="navbar-collapse collapse" id="navbar">
-      <ul class="nav navbar-nav">
-        <li><a href="/">Stream</a></li>
-        <li><a href="/directory/all">Directory</a></li>
-      </ul>
     </div>
   </div>
 </nav>

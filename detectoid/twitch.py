@@ -48,7 +48,7 @@ class Twitch(object):
         """
         Returns basic stats about the top 20/25 streams of a section
         """
-        if game is None:
+        if game is None or game == "all":
             data = self._load_json(endpoints['streams'].format(""))
         else:
             data = self._load_json(endpoints['streams'].format("game="+game))

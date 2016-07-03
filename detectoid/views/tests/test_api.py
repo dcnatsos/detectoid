@@ -40,17 +40,17 @@ class ChannelTests(unittest.TestCase):
 
         list_chatters.return_value = ["foo", "bar", "baz"]
 
-        result = stream(request)
+        result = stream(request)["streams"][0]
 
-        self.assertEqual(result["stream"]["name"],
+        self.assertEqual(result["name"],
                          load_json.return_value["stream"]["channel"]["display_name"])  # NOQA
-        self.assertEqual(result["stream"]["viewers"],
+        self.assertEqual(result["viewers"],
                          load_json.return_value["stream"]["viewers"])
-        self.assertEqual(result["stream"]["views"],
+        self.assertEqual(result["views"],
                          load_json.return_value["stream"]["channel"]["views"])
-        self.assertEqual(result["stream"]["followers"],
+        self.assertEqual(result["followers"],
                          load_json.return_value["stream"]["channel"]["followers"])  # NOQA
-        self.assertEqual(result["stream"]["chatters"], 3)
+        self.assertEqual(result["chatters"], 3)
 
     @patch('detectoid.twitch.Twitch._load_json', return_value=None)
     def test_stream_invalid_stream(self, load_json):

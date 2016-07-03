@@ -1,7 +1,32 @@
 <metal:main use-macro="load: layout.pt" >
   <div class="col-md-12" metal:fill-slot="content">
 
-    <table class="table">
+    <div class="row" tal:condition="len(streams) == 0">
+      <p>
+        Wellcum
+      </p>
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-6">
+        <form action="/">
+          <div class="form-group">
+            <input type="text" class="form-control input-lg" name="stream" placeholder="stream (forsenlol, quin69, etc)" >
+          </div>
+        </form>
+      </div>
+
+      <div class="col-md-6">
+        <form action="/">
+            <div class="form-group">
+              <input type="text" class="form-control input-lg" name="directory" placeholder="directory/game (Overwatch, Dota 2, etc)" >
+            </div>
+        </form>
+      </div>
+    </div>
+
+    <table class="table" tal:condition="len(streams) > 0">
       <thead>
         <tr>
           <th>
@@ -50,6 +75,5 @@
       </tbody>
     </table>
   </div>
-
 
 </metal:main>

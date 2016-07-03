@@ -7,8 +7,8 @@ big {
 body {
     background-image: url("http://i.imgur.com/pjwbZjo.gif");
     background-repeat: no-repeat;
-    background-position: bottom center;
-    min-height: 500px;
+    background-position: left bottom;
+    background-attachment: fixed;
 }
 
 nav.navbar-inverse  {
