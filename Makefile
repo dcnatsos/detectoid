@@ -1,15 +1,18 @@
-all: nosetests flake8
+all: nosetests flake
 doc: html
 include docs/Makefile
 
-env:
-	python bootstrap-buildout.py -c dev.cfg
-	bin/buildout -c dev.cfg
+go-dev:
+	ln -sf dev.cfg buildout.cfg
+
+env:go-dev
+	python bootstrap-buildout.py
+	bin/buildout
 
 test:
 	@echo "==== Running nosetests ===="
 	@bin/test
 
-flake8:
+flake:
 	@echo "==== Running Flake8 ===="
 	@bin/flake8 detectoid/*.py

@@ -10,6 +10,7 @@ detectoid.egg-info/
 .coverage
 coverage.xml
 nosetests.xml
+buildout.cfg
 
 docs/Makefile
 docs/make.bat

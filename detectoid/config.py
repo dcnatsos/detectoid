@@ -22,11 +22,11 @@ def get_config():
     """
     Returns a global configuration object as a dictionnary
 
-    Raise IOError if the config is not loaded and we can't fallback on tests.ini.
+    Raise IOError if the config is not loaded and we can't fallback on pyramid.ini.
     """
     global config
 
     if config is None:
         here = os.path.dirname(__file__)
-        config = appconfig('config:' + os.path.join(here, '../', 'tests.ini'))
+        config = appconfig('config:' + os.path.join(here, '../', 'pyramid.ini'))
     return config

@@ -29,11 +29,13 @@ class ChannelTests(unittest.TestCase):
             "stream": {
                 "viewers": 2025,
                 "channel": {
-                    "display_name":"foobar",
+                    "name":"foobar",
+                    "display_name":"FooBar",
                     "views": 4164868,
                     "followers": 110218,
                 }
-            }
+            },
+            "status": 200,
         }
 
         list_chatters.return_value = ["foo", "bar", "baz"]

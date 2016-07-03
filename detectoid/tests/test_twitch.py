@@ -10,6 +10,7 @@ from detectoid.model import get_session
 from detectoid.model.user import User
 from detectoid.twitch import Twitch, parse_date  # NOQA
 
+
 class TwitchTests(TestCase):
 
     def setUp(self):

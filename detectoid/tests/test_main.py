@@ -12,8 +12,8 @@ from webtest import TestApp
 from detectoid import main
 
 here = os.path.dirname(__file__)
-settings = appconfig('config:' + os.path.join(here, '../../', 'tests.ini'))
-logging.config.fileConfig(os.path.join(here, '../../', 'tests.ini'))
+settings = appconfig('config:' + os.path.join(here, '../../', 'pyramid.ini'))
+logging.config.fileConfig(os.path.join(here, '../../', 'pyramid.ini'))
 
 
 class IntegrationTestBase(unittest.TestCase):
