@@ -1,4 +1,4 @@
-all: nosetests flake
+all: test flake
 
 go-dev:
 	ln -sf dev.cfg buildout.cfg
@@ -9,7 +9,7 @@ env:go-dev
 
 test:
 	@echo "==== Running nosetests ===="
-	@bin/test
+	@bin/test detectoid
 
 flake:
 	@echo "==== Running Flake8 ===="
