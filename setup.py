@@ -1,4 +1,8 @@
-from setuptools import setup
+import os
+from setuptools import setup, find_packages
+
+def read(*rnames):
+    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
 
 required = [
@@ -13,17 +17,18 @@ required = [
 
 extras = {
     'test': [
-        'setuptools',
         'mock',
         'webtest',
     ]
 }
 
+long_description= read('README.md') + '\n' + read('CHANGELOG')
 
 setup(
     name='detectoid',
-    version='0.0.1.dev0',
+    version=read('version.txt').strip(),
     description="Detectoid, a simple website to guess whether a Twitch stream has viewbots",
+    long_description=long_description,
     author="Benjamin Maisonnas",
     author_email="ben@wainei.net",
     url="https://github.com/Benzhaomin/detectoid.git",
@@ -32,7 +37,7 @@ setup(
         'detectoid',
     ],
     include_package_data=True,
-    zip_safe = False,
+    zip_safe=False,
     install_requires=required,
     extras_require=extras,
     test_suite="detectoid.tests",

@@ -1,8 +1,12 @@
-all: nosetests flake8 html
-test: nosetests flake8
+all: nosetests flake8
+doc: html
 include docs/Makefile
 
-nosetests:
+env:
+	python bootstrap-buildout.py -c dev.cfg
+	bin/buildout -c dev.cfg
+
+test:
 	@echo "==== Running nosetests ===="
 	@bin/test
 

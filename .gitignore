@@ -16,6 +16,5 @@ docs/make.bat
 docs/html/
 docs/doctrees/
 
-dev.ini
-tests.ini
+pyramid.ini
 *.db
